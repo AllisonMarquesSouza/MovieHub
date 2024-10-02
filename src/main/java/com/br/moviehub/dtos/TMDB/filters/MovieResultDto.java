@@ -1,4 +1,4 @@
-package com.br.moviehub.dtos.tmdbDtosApi;
+package com.br.moviehub.dtos.TMDB;
 
 import lombok.Getter;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 @Getter
 public class MovieResultDto {
     private int page;
-    private List<TMDbMovieDto> results;
+    private List<MovieDto> results;
     private int total_pages;
     private int total_results;
 }

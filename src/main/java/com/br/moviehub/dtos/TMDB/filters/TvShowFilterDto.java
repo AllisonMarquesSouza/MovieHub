@@ -1,11 +1,12 @@
-package com.br.moviehub.dtos.tmdbDtosApi;
+package com.br.moviehub.dtos.TMDB.filters;
 
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
-public class TMDbTvDto {
+public class TvShowDto {
+    private Boolean adult;
     private String backdrop_path;
     private String first_air_date;
     private List<Integer> genre_ids;
@@ -17,6 +18,6 @@ public class TMDbTvDto {
     private String overview;
     private Float popularity;
     private String poster_path;
-    private Integer vote_average;
+    private Float vote_average;
     private Integer vote_count;
 }

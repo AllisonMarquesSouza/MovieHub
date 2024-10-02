@@ -1,11 +1,11 @@
-package com.br.moviehub.dtos.tmdbDtosApi;
+package com.br.moviehub.dtos.TMDB.filters;
 
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
-public class TMDbMovieDto {
+public class MovieDto {
     private int id;
     private Boolean adult;
     private String title;
