@@ -1,18 +1,21 @@
 package com.br.moviehub.service;
 
-import com.br.moviehub.dtos.tmdbDtosApi.MovieResultDto;
-import com.br.moviehub.dtos.tmdbDtosApi.TMDbGenresDto;
-import com.br.moviehub.dtos.tmdbDtosApi.TvResultDto;
+import com.br.moviehub.dtos.TMDB.details.MovieDetailsDto;
+import com.br.moviehub.dtos.TMDB.details.TvShowDetailsDto;
+import com.br.moviehub.dtos.TMDB.filters.MovieResultDto;
+import com.br.moviehub.dtos.TMDB.filters.GenresFilterDto;
+import com.br.moviehub.dtos.TMDB.filters.TvShowResultDto;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TmdbService {
@@ -37,18 +40,49 @@ public class TmdbService {
     }
 
     public List<?> getAllLanguages() {
-        String url =String.format("https://api.themoviedb.org/3/configuration/languages?api_key=%s", apiKey);
+        String url = String.format("https://api.themoviedb.org/3/configuration/languages?api_key=%s", apiKey);
         return doRequest(url, List.class);
     }
 
-    public TMDbGenresDto getAllGenresMovie() {
+    public GenresFilterDto getAllGenresMovie() {
         String url =String.format("https://api.themoviedb.org/3/genre/movie/list?api_key=%s", apiKey);
-        return doRequest(url, TMDbGenresDto.class);
+        return doRequest(url, GenresFilterDto.class);
     }
 
-    public TMDbGenresDto getAllGenresTv() {
+    public GenresFilterDto getAllGenresTv() {
         String url =String.format("https://api.themoviedb.org/3/genre/tv/list?api_key=%s", apiKey);
-        return doRequest(url, TMDbGenresDto.class);
+        return doRequest(url, GenresFilterDto.class);
+    }
+
+    public MovieDetailsDto getMovieById(Long id){
+        String url =String.format("https://api.themoviedb.org/3/movie/%d?api_key=%s", id ,apiKey);
+        try{
+            return doRequest(url, MovieDetailsDto.class);
+        } catch (HttpClientErrorException.NotFound e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found, check the ID.");
+
+        } catch (HttpClientErrorException.BadRequest e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request. Please check the input.");
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while fetching movie details.");
+        }
+    }
+
+    public TvShowDetailsDto getTvById(Long id){
+        String url =String.format("https://api.themoviedb.org/3/tv/%d?api_key=%s", id ,apiKey);
+        try{
+            return doRequest(url, TvShowDetailsDto.class);
+
+        } catch (HttpClientErrorException.NotFound e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tv not found, check the ID.");
+
+        } catch (HttpClientErrorException.BadRequest e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request. Please check the input.");
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while fetching tv details.");
+        }
     }
 
     public MovieResultDto getDiscoverMovie(Boolean adult, String language, Integer primary_release_year, String region,
@@ -88,10 +122,10 @@ public class TmdbService {
     }
 
     //Tv lists
-    public TvResultDto getDiscoverTv(LocalDate air_date_gte, Integer first_air_date_year, LocalDate first_air_date_gte,
-                                     Boolean include_adult, String language, Float vote_average_gte, Float vote_count_gte,
-                                     String with_genres, String with_keywords, String with_origin_country, String with_original_language,
-                                     String without_genres, String without_keywords) {
+    public TvShowResultDto getDiscoverTv(LocalDate air_date_gte, Integer first_air_date_year, LocalDate first_air_date_gte,
+                                         Boolean include_adult, String language, Float vote_average_gte, Float vote_count_gte,
+                                         String with_genres, String with_keywords, String with_origin_country, String with_original_language,
+                                         String without_genres, String without_keywords) {
         String url = String.format(
                 "https://api.themoviedb.org/3/discover/tv?api_key=%s&air_date.gte=%tF&include_adult=%s&language=%s&page=1&sort_by=popularity.desc" +
                         "&first_air_date_year=%d&first_air_date.gte=%tF&vote_average.gte=%.1f&vote_count.gte=%.1f&with_genres=%s" +
@@ -101,27 +135,27 @@ public class TmdbService {
                 without_keywords
         );
 
-        return doRequest(url, TvResultDto.class);
+        return doRequest(url, TvShowResultDto.class);
     }
 
-    public TvResultDto getAiringTodayTv(String language) {
+    public TvShowResultDto getAiringTodayTv(String language) {
         String url = String.format("https://api.themoviedb.org/3/tv/airing_today?api_key=%s&language=%s&page=1", apiKey, language);
-        return doRequest(url, TvResultDto.class);
+        return doRequest(url, TvShowResultDto.class);
     }
 
-    public TvResultDto getPopularTv(String language) {
+    public TvShowResultDto getPopularTv(String language) {
         String url = String.format("https://api.themoviedb.org/3/tv/popular?api_key=%s&language=%s&page=1", apiKey, language);
-        return doRequest(url, TvResultDto.class);
+        return doRequest(url, TvShowResultDto.class);
     }
 
-    public TvResultDto getTopRatedTv(String language) {
+    public TvShowResultDto getTopRatedTv(String language) {
         String url = String.format("https://api.themoviedb.org/3/tv/top_rated?api_key=%s&language=%s&page=1", apiKey, language);
-        return doRequest(url, TvResultDto.class);
+        return doRequest(url, TvShowResultDto.class);
     }
 
-    public TvResultDto getOnTheAirTv(String language) {
+    public TvShowResultDto getOnTheAirTv(String language) {
         String url = String.format("https://api.themoviedb.org/3/tv/on_the_air?api_key=%s&language=%s&page=1", apiKey, language);
-        return doRequest(url, TvResultDto.class);
+        return doRequest(url, TvShowResultDto.class);
     }
 }
 
