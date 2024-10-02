@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class MovieDto {
+public class MovieFilterDto {
     private int id;
     private Boolean adult;
     private String title;

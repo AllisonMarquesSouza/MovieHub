@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class TvShowDto {
+public class TvShowFilterDto {
     private Boolean adult;
     private String backdrop_path;
     private String first_air_date;
