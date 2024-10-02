@@ -1,0 +1,5 @@
+CREATE TABLE genre
+(
+    id  INT UNIQUE NOT NULL ,
+    name VARCHAR(100) UNIQUE NOT NULL
+);
