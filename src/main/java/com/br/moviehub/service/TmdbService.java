@@ -2,9 +2,10 @@ package com.br.moviehub.service;
 
 import com.br.moviehub.dtos.TMDB.details.MovieDetailsDto;
 import com.br.moviehub.dtos.TMDB.details.TvShowDetailsDto;
-import com.br.moviehub.dtos.TMDB.filters.MovieResultDto;
 import com.br.moviehub.dtos.TMDB.filters.GenresFilterDto;
+import com.br.moviehub.dtos.TMDB.filters.MovieResultDto;
 import com.br.moviehub.dtos.TMDB.filters.TvShowResultDto;
+import com.br.moviehub.exception.personalizedExceptions.BadRequestException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -15,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TmdbService {
@@ -59,10 +59,10 @@ public class TmdbService {
         try{
             return doRequest(url, MovieDetailsDto.class);
         } catch (HttpClientErrorException.NotFound e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found, check the ID.");
+            throw new EntityNotFoundException("Movie not found, check the ID.");
 
         } catch (HttpClientErrorException.BadRequest e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request. Please check the input.");
+            throw new BadRequestException("Invalid request. Please check the input.");
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while fetching movie details.");
@@ -75,10 +75,10 @@ public class TmdbService {
             return doRequest(url, TvShowDetailsDto.class);
 
         } catch (HttpClientErrorException.NotFound e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tv not found, check the ID.");
+            throw new EntityNotFoundException("Tv not found, check the ID.");
 
         } catch (HttpClientErrorException.BadRequest e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request. Please check the input.");
+            throw new BadRequestException("Invalid request. Please check the input.");
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while fetching tv details.");
