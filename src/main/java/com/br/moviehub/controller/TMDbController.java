@@ -2,12 +2,11 @@ package com.br.moviehub.controller;
 
 import com.br.moviehub.dtos.TMDB.details.MovieDetailsDto;
 import com.br.moviehub.dtos.TMDB.details.TvShowDetailsDto;
-import com.br.moviehub.dtos.TMDB.filters.MovieResultDto;
 import com.br.moviehub.dtos.TMDB.filters.GenresFilterDto;
+import com.br.moviehub.dtos.TMDB.filters.MovieResultDto;
 import com.br.moviehub.dtos.TMDB.filters.TvShowResultDto;
 import com.br.moviehub.service.TmdbService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
