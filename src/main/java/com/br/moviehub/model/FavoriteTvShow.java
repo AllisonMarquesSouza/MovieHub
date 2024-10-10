@@ -1,11 +1,13 @@
 package com.br.moviehub.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "favorite_tv_show")
+@Getter
 public class FavoriteTvShow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

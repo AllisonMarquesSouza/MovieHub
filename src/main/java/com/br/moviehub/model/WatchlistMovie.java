@@ -2,11 +2,13 @@ package com.br.moviehub.model;
 
 import com.br.moviehub.enums.Status;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "watchlist_movie")
+@Getter
 public class WatchlistMovie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
