@@ -22,4 +22,6 @@ public interface MovieGenreRepository extends JpaRepository<MovieGenre, Long> {
     @Query("SELECT m.movie FROM MovieGenre m WHERE m.genre.name = :name")
     List<Movie> findMoviesByGenreName(@Param("name") String name);
 
+    Boolean existsByMovieIdAndGenreId(Long movieId, Long genreId);
+
 }
