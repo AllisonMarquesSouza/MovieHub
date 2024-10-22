@@ -21,4 +21,6 @@ public interface TvShowGenreRepository extends JpaRepository<TvShowGenre, Long> 
 
     @Query("SELECT t.tvShow FROM TvShowGenre t WHERE t.genre.name = :name")
     List<TvShow> findTvShowByGenreName(@Param("name") String name);
+
+    Boolean existsByTvShowIdAndGenreId(Long tvShowId, Long genreId);
 }
