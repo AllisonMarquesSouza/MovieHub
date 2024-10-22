@@ -1,11 +1,11 @@
 package com.br.moviehub.dtos.TMDB.filters;
 
-import com.br.moviehub.dtos.TMDB.details.GenreDetailsDto;
+import com.br.moviehub.model.Genre;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
 public class GenresFilterDto {
-    private List<GenreDetailsDto> genres;
+    private List<Genre> genres;
 }

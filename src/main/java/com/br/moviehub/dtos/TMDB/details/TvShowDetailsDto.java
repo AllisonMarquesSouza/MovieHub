@@ -1,4 +1,5 @@
 package com.br.moviehub.dtos.TMDB.details;
+import com.br.moviehub.model.Genre;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -16,7 +17,7 @@ public class TvShowDetailsDto {
 
     private String overview;
 
-    private List<GenreDetailsDto> genres;
+    private List<Genre> genres;
 
     private Boolean adult;
 
