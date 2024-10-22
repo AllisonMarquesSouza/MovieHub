@@ -16,31 +16,31 @@ import java.util.List;
 public class FavoriteMovieController {
     private final FavoriteMovieService favoriteMovieService;
 
-    @PostMapping("/addFavorite")
-    public ResponseEntity<FavoriteMovie> addFavorite(@RequestBody FavoriteMovieDto favoriteMovieDto) {
-        return new ResponseEntity<>(favoriteMovieService.addFavorite(favoriteMovieDto.getUserId(), favoriteMovieDto.getMovieId()),
-                HttpStatus.CREATED);
-    }
-
-    @GetMapping("/getFavoritesByUserId/{userId}")
+    @GetMapping("/getByUserId/{userId}")
     public ResponseEntity<List<FavoriteMovie>> getFavoritesByUserId(@PathVariable Long userId) {
         return ResponseEntity.ok(favoriteMovieService.getFavoritesByUserId(userId));
     }
 
-    @GetMapping("/isMovieFavorited")
+    @GetMapping("/isFavorited")
     public ResponseEntity<Boolean> isMovieFavorited(@RequestBody FavoriteMovieDto favoriteMovieDto) {
-        return ResponseEntity.ok(favoriteMovieService.isMovieFavorited(favoriteMovieDto.getUserId(), favoriteMovieDto.getMovieId()));
+        return ResponseEntity.ok(favoriteMovieService.isMovieFavorited(favoriteMovieDto));
     }
 
-    @DeleteMapping("/removeFavorite")
-    public ResponseEntity<Void> removeFavorite(@RequestBody FavoriteMovieDto favoriteMovieDto) {
-        favoriteMovieService.removeFavorite(favoriteMovieDto);
+    @PostMapping("/add")
+    public ResponseEntity<FavoriteMovie> addFavorite(@RequestBody FavoriteMovieDto favoriteMovieDto) {
+        return new ResponseEntity<>(favoriteMovieService.addFavorite(favoriteMovieDto),
+                HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteFavorite(@RequestBody FavoriteMovieDto favoriteMovieDto) {
+        favoriteMovieService.deleteFavorite(favoriteMovieDto);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/removeAllFavorites/{userId}")
-    public ResponseEntity<Void> removeAllFavorites(@PathVariable Long userId) {
-        favoriteMovieService.removeAllFavorites(userId);
+    @DeleteMapping("/deleteAll/{userId}")
+    public ResponseEntity<Void> deleteAllFavorites(@PathVariable Long userId) {
+        favoriteMovieService.deleteAllFavorites(userId);
         return ResponseEntity.noContent().build();
     }
 }
