@@ -2,12 +2,14 @@ package com.br.moviehub.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "favorite_tv_show")
 @Getter
+@NoArgsConstructor
 public class FavoriteTvShow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +26,9 @@ public class FavoriteTvShow {
     @JoinColumn(name = "tv_show_id")
     private TvShow tvShow;
 
+    public FavoriteTvShow(User user, TvShow tvShow) {
+        this.user = user;
+        this.tvShow = tvShow;
+        this.creationDate = LocalDate.now();
+    }
 }
