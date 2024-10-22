@@ -8,7 +8,6 @@ import com.br.moviehub.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class FavoriteMovieService {
     private final MovieService movieService;
     private final GenreService genreService;
@@ -27,20 +25,21 @@ public class FavoriteMovieService {
     private final UserRepository userRepository;
 
     public List<FavoriteMovie> getFavoritesByUserId(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
-        return favoriteMovieRepository.findAllByUser(user);
+        return favoriteMovieRepository.findAllByUserId(userId);
     }
 
-    public Boolean isMovieFavorited(Long userId, Long movieId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
-        return favoriteMovieRepository.existsByUserIdAndMovieId(user.getId(), movieId);
+    public Boolean isMovieFavorited(FavoriteMovieDto favoriteMovieDto) {
+        return favoriteMovieRepository.existsByUserIdAndMovieId(favoriteMovieDto.getUserId(), favoriteMovieDto.getMovieId());
     }
-
 
     @Transactional
-    public FavoriteMovie addFavorite(Long userId, Long movieId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
-        MovieDetailsDto movieFound = Optional.ofNullable(tmdbService.getMovieById(movieId)).orElseThrow(() -> new EntityNotFoundException("Movie not found"));
+    public FavoriteMovie addFavorite(FavoriteMovieDto favoriteMovieDto) {
+        User user = userRepository.findById(favoriteMovieDto.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        MovieDetailsDto movieFound = Optional.ofNullable(tmdbService.getMovieById(favoriteMovieDto.getMovieId()))
+                .orElseThrow(() -> new EntityNotFoundException("Movie not found"));
+
         Movie movieToSave = new Movie(movieFound);
 
 
@@ -57,9 +56,6 @@ public class FavoriteMovieService {
                 MovieGenre movieGenreToSave = new MovieGenre(movieToSave, genre);
                 movieGenreService.save(movieGenreToSave);
             }
-            if (!movieToSave.getGenres().contains(genre)) {
-                movieToSave.getGenres().add(genre);
-            }
         }
 
         if(favoriteMovieRepository.existsByUserIdAndMovieId(user.getId(), movieToSave.getId())) {
@@ -70,17 +66,17 @@ public class FavoriteMovieService {
     }
 
     @Transactional
-    public void removeFavorite(FavoriteMovieDto favoriteMovieDto) {
+    public void deleteFavorite(FavoriteMovieDto favoriteMovieDto) {
         favoriteMovieRepository.findByUserIdAndMovieId(favoriteMovieDto.getUserId(), favoriteMovieDto.getMovieId())
                 .orElseThrow(() -> new EntityNotFoundException("Not found in favorite list, check the UserId and MovieId"));
 
-        if(favoriteMovieRepository.existsByUserIdAndMovieId(favoriteMovieDto.getUserId(), favoriteMovieDto.getMovieId())) {
-            favoriteMovieRepository.deleteByUserIdAndMovieId(favoriteMovieDto.getUserId(), favoriteMovieDto.getMovieId());
-        }
+        // Delete after confirming existence
+        favoriteMovieRepository.deleteByUserIdAndMovieId(favoriteMovieDto.getUserId(), favoriteMovieDto.getMovieId());
+
     }
 
     @Transactional
-    public void removeAllFavorites(Long userId) {
+    public void deleteAllFavorites(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         favoriteMovieRepository.deleteAllByUserId(user.getId());
     }
