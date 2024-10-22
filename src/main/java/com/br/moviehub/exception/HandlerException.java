@@ -1,7 +1,7 @@
 package com.br.moviehub.exception;
 
 import com.br.moviehub.exception.personalizedExceptions.BadRequestException;
-import com.br.moviehub.exception.personalizedExceptions.ResourceAlreadyExistsException;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +23,24 @@ public class HandlerException {
                         .message(entityNotFound.getMessage())
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.NOT_FOUND.value())
-                        .title("Not Found Exception , Check the Documentation")
+                        .title("NotFoundException , Check the Documentation")
                         .details(entityNotFound.getCause() != null ? entityNotFound.getCause().toString() : "No details available")
                         .developerMessage(entityNotFound.getClass().getName())
                         .build(), HttpStatus.NOT_FOUND);
+
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<ExceptionDetails> handleEntityExistsException(EntityExistsException entityExistsException) {
+        return new ResponseEntity<>(
+                ExceptionDetails.builder()
+                        .message(entityExistsException.getMessage())
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.CONFLICT.value())
+                        .title("EntityExistsException, Check the Documentation")
+                        .details(entityExistsException.getCause() != null ? entityExistsException.getCause().toString() : "No details available")
+                        .developerMessage(entityExistsException.getClass().getName())
+                        .build(), HttpStatus.CONFLICT);
 
     }
 
@@ -40,24 +54,12 @@ public class HandlerException {
                         .message("Validation failed for one or more fields.")
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.BAD_REQUEST.value())
-                        .title("MethodArgumentNotValidException")
+                        .title("MethodArgumentNotValidException, Check the Documentation")
                         .details(errorMessages.toString())
                         .developerMessage(methodArg.getClass().getName())
                         .build(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ResourceAlreadyExistsException.class)
-    public ResponseEntity<ExceptionDetails> handleResourceAlreadyExistsException(ResourceAlreadyExistsException resource) {
-        return new ResponseEntity<>(
-                ExceptionDetails.builder()
-                        .message(resource.getMessage())
-                        .timestamp(LocalDateTime.now())
-                        .status(HttpStatus.CONFLICT.value())
-                        .title("ResourceAlreadyExistsException")
-                        .details(resource.getCause() != null ? resource.getCause().toString() : "No details available")
-                        .developerMessage(resource.getClass().getName())
-                        .build(), HttpStatus.CONFLICT);
-    }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ExceptionDetails> handleBadRequestException(BadRequestException badRequest) {
@@ -66,7 +68,7 @@ public class HandlerException {
                         .message(badRequest.getMessage())
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.BAD_REQUEST.value())
-                        .title("BadRequestException")
+                        .title("BadRequestException, Check the Documentation")
                         .details(badRequest.getCause() != null ? badRequest.getCause().toString() : "No details available")
                         .developerMessage(badRequest.getClass().getName())
                         .build(), HttpStatus.BAD_REQUEST);
