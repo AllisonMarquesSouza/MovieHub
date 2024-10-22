@@ -6,10 +6,10 @@ import com.br.moviehub.dtos.authentication.RegisterDto;
 import com.br.moviehub.dtos.authentication.TokenResponseDto;
 import com.br.moviehub.enums.UserRole;
 import com.br.moviehub.exception.personalizedExceptions.BadRequestException;
-import com.br.moviehub.exception.personalizedExceptions.ResourceAlreadyExistsException;
 import com.br.moviehub.model.User;
 import com.br.moviehub.repository.UserRepository;
 import com.br.moviehub.security.TokenService;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -68,13 +68,11 @@ public class AuthenticationService implements UserDetailsService {
     public User register(RegisterDto registerDto) {
         if (this.userRepository.findByUsername(registerDto.getUsername()) != null) {
             String message = "Username already exists!";
-            String details = String.format("The username '%s' is already registered. Please use a different username.", registerDto.getUsername());
-            throw new ResourceAlreadyExistsException(message, details);
+            throw new EntityExistsException(message);
         }
         if (this.userRepository.findByEmail(registerDto.getEmail()) != null) {
             String message = "Email already exists!";
-            String details = String.format("The email '%s' is already registered. Please use a different email.", registerDto.getEmail());
-            throw new ResourceAlreadyExistsException(message, details);
+            throw new EntityExistsException(message);
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerDto.getPassword());
