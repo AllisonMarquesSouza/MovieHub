@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -60,6 +61,18 @@ public class HandlerException {
                         .build(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ExceptionDetails> handleMethodArgumentNotValidException(MissingServletRequestParameterException missingParam) {
+        return new ResponseEntity<>(
+                ExceptionDetails.builder()
+                        .message("Missing parameter '" + missingParam.getParameterName() + "'"+" check it")
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .title("MissingServletRequestParameterException, Check the Documentation")
+                        .details(missingParam.getCause() != null ? missingParam.getCause().toString() : "No details available")
+                        .developerMessage(missingParam.getClass().getName())
+                        .build(), HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ExceptionDetails> handleBadRequestException(BadRequestException badRequest) {
