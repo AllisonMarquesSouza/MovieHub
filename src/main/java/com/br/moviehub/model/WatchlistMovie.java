@@ -3,12 +3,16 @@ package com.br.moviehub.model;
 import com.br.moviehub.enums.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "watchlist_movie")
 @Getter
+@Setter
+@NoArgsConstructor
 public class WatchlistMovie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +33,12 @@ public class WatchlistMovie {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
+    public WatchlistMovie(User user, Movie movie) {
+        this.user = user;
+        this.movie = movie;
+        this.creationDate = LocalDate.now();
+        this.status = Status.NOT_STARTED;
+    }
 }
 
 
