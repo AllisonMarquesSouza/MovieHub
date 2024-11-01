@@ -1,6 +1,6 @@
 package com.br.moviehub.controller;
 
-import com.br.moviehub.dtos.favoriteTvShow.FavoriteTvShowDto;
+import com.br.moviehub.dtos.favorites.FavoriteTvShowDto;
 import com.br.moviehub.model.FavoriteTvShow;
 import com.br.moviehub.service.FavoriteTvShowService;
 import lombok.RequiredArgsConstructor;

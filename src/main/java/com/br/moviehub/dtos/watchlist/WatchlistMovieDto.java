@@ -1,4 +1,4 @@
-package com.br.moviehub.dtos.watchlistMovie;
+package com.br.moviehub.dtos.watchlist;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

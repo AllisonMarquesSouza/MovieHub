@@ -1,4 +1,4 @@
-package com.br.moviehub.dtos.watchlistMovie;
+package com.br.moviehub.dtos.watchlist;
 
 import com.br.moviehub.enums.Status;
 import jakarta.persistence.EnumType;

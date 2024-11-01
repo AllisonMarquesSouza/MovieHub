@@ -1,7 +1,7 @@
 package com.br.moviehub.service;
 
 import com.br.moviehub.dtos.TMDB.details.MovieDetailsDto;
-import com.br.moviehub.dtos.favoriteMovie.FavoriteMovieDto;
+import com.br.moviehub.dtos.favorites.FavoriteMovieDto;
 import com.br.moviehub.model.*;
 import com.br.moviehub.repository.FavoriteMovieRepository;
 import com.br.moviehub.repository.UserRepository;
@@ -42,16 +42,11 @@ public class FavoriteMovieService {
 
         Movie movieToSave = new Movie(movieFound);
 
-
-        // Create and save genres, ensure they are saved before using them
         List<Genre> genreListSaved = genreService.saveAll(movieFound.getGenres());
 
-        //Save the movie
         movieService.save(movieToSave);
 
-
         for(Genre genre : genreListSaved) {
-            // Check if the movie and genre relationship already exists
             if (!movieGenreService.existsByMovieIdAndGenreId(movieToSave.getId(), genre.getId())) {
                 MovieGenre movieGenreToSave = new MovieGenre(movieToSave, genre);
                 movieGenreService.save(movieGenreToSave);
@@ -70,7 +65,6 @@ public class FavoriteMovieService {
         favoriteMovieRepository.findByUserIdAndMovieId(favoriteMovieDto.getUserId(), favoriteMovieDto.getMovieId())
                 .orElseThrow(() -> new EntityNotFoundException("Not found in favorite list, check the UserId and MovieId"));
 
-        // Delete after confirming existence
         favoriteMovieRepository.deleteByUserIdAndMovieId(favoriteMovieDto.getUserId(), favoriteMovieDto.getMovieId());
 
     }

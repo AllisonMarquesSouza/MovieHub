@@ -1,7 +1,7 @@
 package com.br.moviehub.service;
 
 import com.br.moviehub.dtos.TMDB.details.TvShowDetailsDto;
-import com.br.moviehub.dtos.favoriteTvShow.FavoriteTvShowDto;
+import com.br.moviehub.dtos.favorites.FavoriteTvShowDto;
 import com.br.moviehub.model.*;
 import com.br.moviehub.repository.FavoriteTvShowRepository;
 import com.br.moviehub.repository.UserRepository;
@@ -42,14 +42,11 @@ public class FavoriteTvShowService {
 
         TvShow tvShowToSave = new TvShow(tvShowFound);
 
-        // Create and save genres, ensure they are saved before using them
         List<Genre> genreListSaved = genreService.saveAll(tvShowFound.getGenres());
 
-        //Save the tvShow
         tvShowService.save(tvShowToSave);
 
         for(Genre genre : genreListSaved) {
-            // Check if the tvShow and genre relationship already exists
             if (!tvShowGenreService.existsByTvShowIdAndGenreId(tvShowToSave.getId(), genre.getId())) {
                 TvShowGenre tvShowGenreToSave = new TvShowGenre(tvShowToSave, genre);
                 tvShowGenreService.save(tvShowGenreToSave);
@@ -58,7 +55,6 @@ public class FavoriteTvShowService {
 
         if(favoriteTvShowRepository.existsByUserIdAndTvShowId(user.getId(), tvShowToSave.getId())) {
             throw new EntityExistsException("Movie already exists in the favorite list");
-            //check this exception and in FavoriteMovie too.
         }
         FavoriteTvShow favoriteTvShow = new FavoriteTvShow(user, tvShowToSave);
         return favoriteTvShowRepository.save(favoriteTvShow);
@@ -69,7 +65,6 @@ public class FavoriteTvShowService {
         favoriteTvShowRepository.findByUserIdAndTvShowId(favoriteTvShowDto.getUserId(), favoriteTvShowDto.getTvShowId())
                 .orElseThrow(() -> new EntityNotFoundException("Not found in favorite list, check the UserId and MovieId"));
 
-        // Delete after confirming existence
         favoriteTvShowRepository.deleteByUserIdAndTvShowId(favoriteTvShowDto.getUserId(), favoriteTvShowDto.getTvShowId());
     }
 

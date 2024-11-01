@@ -1,8 +1,8 @@
 package com.br.moviehub.controller;
 
-import com.br.moviehub.dtos.watchlistMovie.WatchlistMovieDto;
-import com.br.moviehub.dtos.watchlistMovie.WatchlistMovieUpdateDto;
-import com.br.moviehub.dtos.watchlistMovie.DeleteWatchlistByStatusDto;
+import com.br.moviehub.dtos.watchlist.WatchlistMovieDto;
+import com.br.moviehub.dtos.watchlist.WatchlistMovieUpdateDto;
+import com.br.moviehub.dtos.watchlist.DeleteWatchlistByStatusDto;
 import com.br.moviehub.enums.Status;
 import com.br.moviehub.model.WatchlistMovie;
 import com.br.moviehub.service.WatchlistMovieService;
