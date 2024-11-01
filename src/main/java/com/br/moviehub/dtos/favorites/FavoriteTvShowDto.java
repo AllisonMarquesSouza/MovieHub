@@ -1,4 +1,4 @@
-package com.br.moviehub.dtos.favoriteTvShow;
+package com.br.moviehub.dtos.favorites;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
