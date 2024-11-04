@@ -8,16 +8,22 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
 
     @Bean
     public OpenAPI openAPI() {
+        Server server = new Server();
+        server.setUrl("http://localhost:8080");
+        server.setDescription("Development");
+
         return new OpenAPI()
                 .info(new Info()
                         .title("Movie Hub")
@@ -31,7 +37,9 @@ public class OpenApiConfig {
                 .externalDocs(new ExternalDocumentation()
                         .description("Movie Hub GitHub Documentation")
                         .url("https://github.com/AllisonMarquesSouza/MovieHub")
-                ).components(new Components()
+                )
+                .servers(List.of(server))
+                .components(new Components()
                         .addSecuritySchemes("bearerAuth", new SecurityScheme().type(SecurityScheme.Type.HTTP)
                                 .scheme("bearer")
                                 .bearerFormat("JWT")
