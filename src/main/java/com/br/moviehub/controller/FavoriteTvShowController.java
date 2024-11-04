@@ -1,7 +1,6 @@
 package com.br.moviehub.controller;
 
 import com.br.moviehub.dtos.favorites.FavoriteTvShowDto;
-import com.br.moviehub.model.FavoriteMovie;
 import com.br.moviehub.model.FavoriteTvShow;
 import com.br.moviehub.service.FavoriteTvShowService;
 import io.swagger.v3.oas.annotations.Operation;

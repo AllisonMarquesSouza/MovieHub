@@ -51,7 +51,7 @@ public class AuthenticationController {
 
     @Operation(summary =  "changePassword", method = "PATCH", description ="Change the password", responses = {
             @ApiResponse(responseCode = "204", description = "successful operation, no content",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)
+                    content = @Content(mediaType = "application/json"
                     ))})
     @PatchMapping("/changePassword")
     public ResponseEntity<Void> changePassword(@RequestBody @Valid ChangePasswordDto data){
