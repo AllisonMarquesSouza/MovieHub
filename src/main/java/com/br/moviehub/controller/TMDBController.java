@@ -7,6 +7,7 @@ import com.br.moviehub.dtos.TMDB.filters.MovieResultDto;
 import com.br.moviehub.dtos.TMDB.filters.TvShowResultDto;
 import com.br.moviehub.service.TmdbService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,8 +34,11 @@ public class TMDBController {
     private final TmdbService tmdbService;
 
     @Operation(summary =  "languages", method = "GET", description ="Get all languages from TMDB", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = List.class)
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
+                    content = @Content(mediaType = "application/json",  array = @ArraySchema(schema = @Schema(implementation = List.class))
+
                     ))})
     @GetMapping("/languages")
     public ResponseEntity<List<?>> allLanguages() {
@@ -42,7 +46,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "getAllGenresMovie", method = "GET", description ="Get all genres of Movie", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = GenresFilterDto.class)
                     ))})
     @GetMapping("/getAllGenresMovie")
@@ -51,7 +57,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "getAllGenresTvShow", method = "GET", description ="Get all genres of Tv Show", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = GenresFilterDto.class)
                     ))})
     @GetMapping("/getAllGenresTvShow")
@@ -61,7 +69,9 @@ public class TMDBController {
 
     //Movie methods
     @Operation(summary =  "getMovieById", method = "GET", description ="Get Movie by id ", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDetailsDto.class)
                     ))})
     @GetMapping("/movie/{id}")
@@ -70,7 +80,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "discoverMovie", method = "GET", description ="Discover Movies by params ", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieResultDto.class)
                     ))})
     @GetMapping("/discoverMovie")
@@ -92,7 +104,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "popularMovies", method = "GET", description ="Get popular Movies ", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieResultDto.class)
                     ))})
     @GetMapping("/popularMovies")
@@ -101,7 +115,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "nowPlayingMovie", method = "GET", description ="Get now playing Movies ", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieResultDto.class)
                     ))})
     @GetMapping("/nowPlayingMovie")
@@ -110,7 +126,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "topRatedMovies", method = "GET", description ="Get to rated Movies", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieResultDto.class)
                     ))})
     @GetMapping("/topRatedMovies")
@@ -119,7 +137,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "upcomingMovies", method = "GET", description ="Get Upcoming Movies", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieResultDto.class)
                     ))})
     @GetMapping("/upcomingMovies")
@@ -129,7 +149,9 @@ public class TMDBController {
 
     //Tv methods
     @Operation(summary =  "getTvShowById", method = "GET", description ="Get Tv Show by id ", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = TvShowDetailsDto.class)
                     ))})
     @GetMapping(value = "/tv/{id}")
@@ -138,7 +160,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "discoverTv", method = "GET", description ="Discover Tv Shows by params ", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = TvShowResultDto.class)
                     ))})
     @GetMapping("/discoverTv")
@@ -162,7 +186,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "airingTodayTv", method = "GET", description ="Get airing today Tv Show", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = TvShowResultDto.class)
                     ))})
     @GetMapping("/airingTodayTv")
@@ -171,7 +197,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "popularTv", method = "GET", description ="Get popular Tv Shows", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = TvShowResultDto.class)
                     ))})
     @GetMapping("/popularTv")
@@ -180,7 +208,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "topRatedTv", method = "GET", description ="Get top rated Tv Shows", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = TvShowResultDto.class)
                     ))})
     @GetMapping("/topRatedTv")
@@ -189,7 +219,9 @@ public class TMDBController {
     }
 
     @Operation(summary =  "onTheAirTv", method = "GET", description ="Get on the air Tv Shows", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = TvShowResultDto.class)
                     ))})
     @GetMapping("/onTheAirTv")

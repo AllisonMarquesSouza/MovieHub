@@ -4,6 +4,7 @@ import com.br.moviehub.dtos.favorites.FavoriteMovieDto;
 import com.br.moviehub.model.FavoriteMovie;
 import com.br.moviehub.service.FavoriteMovieService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,8 +31,10 @@ public class FavoriteMovieController {
     private final FavoriteMovieService favoriteMovieService;
 
     @Operation(summary =  "getByUserId", method = "GET", description ="Get favorites Movies by user id", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = FavoriteMovie.class)
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
+                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = FavoriteMovie.class))
                     ))})
     @GetMapping("/getByUserId/{userId}")
     public ResponseEntity<List<FavoriteMovie>> getFavoritesByUserId(@PathVariable Long userId) {
@@ -39,7 +42,9 @@ public class FavoriteMovieController {
     }
 
     @Operation(summary =  "isFavorited", method = "GET", description ="Check if Movie is favorite", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Boolean.class)
                     ))})
     @GetMapping("/isFavorited")
@@ -48,7 +53,9 @@ public class FavoriteMovieController {
     }
 
     @Operation(summary =  "add", method = "POST", description ="Add Movie in favorite list", responses = {
-            @ApiResponse(responseCode = "201", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Movie successfully added to favorites",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = FavoriteMovie.class)
                     ))})
     @PostMapping("/add")
@@ -58,7 +65,9 @@ public class FavoriteMovieController {
     }
 
     @Operation(summary =  "delete", method = "DELETE", description ="Delete Movie from favorite list", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful deletion",
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/delete")
@@ -68,7 +77,9 @@ public class FavoriteMovieController {
     }
 
     @Operation(summary =  "deleteAll", method = "DELETE", description ="Delete all Movies from favorite list", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful deletion",
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/deleteAll/{userId}")

@@ -7,6 +7,7 @@ import com.br.moviehub.enums.Status;
 import com.br.moviehub.model.WatchlistMovie;
 import com.br.moviehub.service.WatchlistMovieService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,8 +34,10 @@ public class WatchlistMovieController {
     private final WatchlistMovieService watchlistMovieService;
 
     @Operation(summary =  "getAllByUserId", method = "GET", description ="Get all Movies in watchlist by user id", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = WatchlistMovie.class)
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
+                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = WatchlistMovie.class))
                     ))})
     @GetMapping("/getAllByUserId/{id}")
     public ResponseEntity<List<WatchlistMovie>> getAllByUserId(@PathVariable Long id) {
@@ -42,7 +45,9 @@ public class WatchlistMovieController {
     }
 
     @Operation(summary =  "isMovieInWatchlist", method = "GET", description ="Check if Movie is in watchlist", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Boolean.class)
                     ))})
     @GetMapping("/isMovieInWatchlist")
@@ -51,8 +56,10 @@ public class WatchlistMovieController {
     }
 
     @Operation(summary =  "getMovieByUserIdAndStatus", method = "GET", description ="Get Movie in watchlist by user id and status", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = WatchlistMovie.class)
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
+                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = WatchlistMovie.class))
                     ))})
     @GetMapping("/getMoviesByStatus")
     public ResponseEntity<List<WatchlistMovie>> getMoviesByStatus(@RequestParam Long userId, @RequestParam Status status) {
@@ -60,7 +67,9 @@ public class WatchlistMovieController {
     }
 
     @Operation(summary =  "add", method = "POST", description ="Add Movie in watchlist", responses = {
-            @ApiResponse(responseCode = "201", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Movie successfully added to watchlist",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = WatchlistMovie.class)
                     ))})
     @PostMapping("/add")
@@ -69,7 +78,9 @@ public class WatchlistMovieController {
     }
 
     @Operation(summary =  "updateStatus", method = "PATCH", description ="Update the status of the Movie in the watchlist", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful update",
                     content = @Content(mediaType = "application/json"
                     ))})
     @PatchMapping("updateStatus")
@@ -79,7 +90,9 @@ public class WatchlistMovieController {
     }
 
     @Operation(summary =  "deleteByStatus", method = "DELETE", description ="Delete Movie from watchlist by status", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful deletion",
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/deleteByStatus")
@@ -89,7 +102,9 @@ public class WatchlistMovieController {
     }
 
     @Operation(summary =  "delete", method = "DELETE", description ="Delete Movie from watchlist", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful deletion",
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/delete")
@@ -99,7 +114,9 @@ public class WatchlistMovieController {
     }
 
     @Operation(summary =  "deleteAll", method = "DELETE", description ="Delete all Movies from watchlist by userId", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful deletion",
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/deleteAll/{userId}")

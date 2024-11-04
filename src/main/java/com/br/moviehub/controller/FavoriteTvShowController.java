@@ -4,6 +4,7 @@ import com.br.moviehub.dtos.favorites.FavoriteTvShowDto;
 import com.br.moviehub.model.FavoriteTvShow;
 import com.br.moviehub.service.FavoriteTvShowService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,8 +31,10 @@ public class FavoriteTvShowController {
     private final FavoriteTvShowService favoriteTvShowService;
 
     @Operation(summary =  "getByUserId", method = "GET", description ="Get favorites Tv Shows by user id", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = FavoriteTvShow.class)
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
+                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = FavoriteTvShow.class))
                     ))})
     @GetMapping("/getByUserId/{id}")
     public ResponseEntity<List<FavoriteTvShow>> getFavoritesByUserId(@PathVariable Long id){
@@ -39,7 +42,9 @@ public class FavoriteTvShowController {
     }
 
     @Operation(summary =  "isFavorited", method = "GET", description ="Check if Tv Show is favorite", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Boolean.class)
                     ))})
     @GetMapping("/isFavorited")
@@ -48,7 +53,9 @@ public class FavoriteTvShowController {
     }
 
     @Operation(summary =  "add", method = "POST", description ="Add Tv Show in favorite list", responses = {
-            @ApiResponse(responseCode = "201", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Tv Show successfully added to favorites",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = FavoriteTvShow.class)
                     ))})
     @PostMapping("/add")
@@ -57,7 +64,9 @@ public class FavoriteTvShowController {
     }
 
     @Operation(summary =  "delete", method = "DELETE", description ="Delete Tv Show from favorite list", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful deletion",
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/delete")
@@ -67,7 +76,9 @@ public class FavoriteTvShowController {
     }
 
     @Operation(summary =  "deleteAll", method = "DELETE", description ="Delete all Tv Shows from favorite list", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful deletion",
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/deleteAll/{userId}")

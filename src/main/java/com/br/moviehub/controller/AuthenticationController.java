@@ -32,7 +32,9 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @Operation(summary =  "login", method = "POST", description ="Login", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful login",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = TokenResponseDto.class)
                     ))})
     @PostMapping("/login")
@@ -41,7 +43,9 @@ public class AuthenticationController {
     }
 
     @Operation(summary =  "register", method = "POST", description ="Register new User", responses = {
-            @ApiResponse(responseCode = "201", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Created, successful register",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)
                     ))})
     @PostMapping("/register")
@@ -50,7 +54,9 @@ public class AuthenticationController {
     }
 
     @Operation(summary =  "changePassword", method = "PATCH", description ="Change the password", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful change",
                     content = @Content(mediaType = "application/json"
                     ))})
     @PatchMapping("/changePassword")

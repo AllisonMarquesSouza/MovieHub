@@ -7,6 +7,7 @@ import com.br.moviehub.enums.Status;
 import com.br.moviehub.model.WatchlistTvShow;
 import com.br.moviehub.service.WatchlistTvShowService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,8 +34,10 @@ public class WatchlistTvShowController {
     private final WatchlistTvShowService watchlistTvShowService;
 
     @Operation(summary =  "getAllByUserId", method = "GET", description ="Get all Tv Shows in watchlist by user id", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = WatchlistTvShow.class)
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
+                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = WatchlistTvShow.class))
                     ))})
     @GetMapping("/getAllByUserId/{id}")
     public ResponseEntity<List<WatchlistTvShow>> getAllByUserId(@PathVariable Long id){
@@ -42,7 +45,9 @@ public class WatchlistTvShowController {
     }
 
     @Operation(summary =  "isTvShowInWatchlist", method = "GET", description ="Check if Tv Show is in watchlist", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Boolean.class)
                     ))})
     @GetMapping("/isTvShowInWatchlist")
@@ -51,8 +56,10 @@ public class WatchlistTvShowController {
     }
 
     @Operation(summary =  "getTvShowByUserIdAndStatus", method = "GET", description ="Get Tv Show in watchlist by user id and status", responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = WatchlistTvShow.class)
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful operation",
+                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = WatchlistTvShow.class))
                     ))})
     @GetMapping("/getAllByUserIdAndStatus")
     public ResponseEntity<List<WatchlistTvShow>> getTvShowByStatus(@RequestParam Long userId, @RequestParam Status status){
@@ -60,7 +67,9 @@ public class WatchlistTvShowController {
     }
 
     @Operation(summary =  "add", method = "POST", description ="Add Tv Show in watchlist", responses = {
-            @ApiResponse(responseCode = "201", description = "successful operation",
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Tv Show successfully added to watchlist",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = WatchlistTvShow.class)
                     ))})
     @PostMapping("/add")
@@ -69,7 +78,9 @@ public class WatchlistTvShowController {
     }
 
     @Operation(summary =  "updateStatus", method = "PATCH", description ="Update the status of the Tv Show in the watchlist", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful update",
                     content = @Content(mediaType = "application/json"
                     ))})
     @PatchMapping("/updateStatus")
@@ -79,7 +90,9 @@ public class WatchlistTvShowController {
     }
 
     @Operation(summary =  "delete", method = "DELETE", description ="Delete Tv Show from watchlist", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful deletion",
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/delete")
@@ -89,7 +102,9 @@ public class WatchlistTvShowController {
     }
 
     @Operation(summary =  "deleteByStatus", method = "DELETE", description ="Delete Tv Show from watchlist by status", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful deletion",
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/deleteByStatus")
@@ -99,7 +114,9 @@ public class WatchlistTvShowController {
     }
 
     @Operation(summary =  "deleteAll", method = "DELETE", description ="Delete all Tv Shows from watchlist by userId", responses = {
-            @ApiResponse(responseCode = "204", description = "successful operation, no content",
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content, successful deletion",
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/deleteAll/{userId}")
