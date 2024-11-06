@@ -1,0 +1,22 @@
+services:
+  db:
+    image: mysql:8.0.33
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: movie_hub
+      MYSQL_ROOT_PASSWORD: your-rootPassword
+      MYSQL_USER: your-user
+      MYSQL_PASSWORD: your-password
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - movie-hub-network
+
+networks:
+  movie-hub-network:
+    driver: bridge
+
+volumes:
+  db:
