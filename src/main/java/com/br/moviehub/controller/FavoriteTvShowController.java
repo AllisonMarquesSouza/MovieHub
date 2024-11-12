@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,7 @@ public class FavoriteTvShowController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Boolean.class)
                     ))})
     @GetMapping("/isFavorited")
-    public ResponseEntity<Boolean> isTvShowFavorited(@RequestBody FavoriteTvShowDto tvShowDto){
+    public ResponseEntity<Boolean> isTvShowFavorited(@RequestBody @Valid FavoriteTvShowDto tvShowDto){
         return ResponseEntity.ok(favoriteTvShowService.isTvShowFavorited(tvShowDto));
     }
 
@@ -59,7 +60,7 @@ public class FavoriteTvShowController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = FavoriteTvShow.class)
                     ))})
     @PostMapping("/add")
-    public ResponseEntity<FavoriteTvShow> addFavorite(@RequestBody FavoriteTvShowDto tvShowDto){
+    public ResponseEntity<FavoriteTvShow> addFavorite(@RequestBody @Valid FavoriteTvShowDto tvShowDto){
         return new ResponseEntity<>(favoriteTvShowService.addFavorite(tvShowDto), HttpStatus.CREATED);
     }
 
@@ -70,7 +71,7 @@ public class FavoriteTvShowController {
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteFavorite(@RequestBody FavoriteTvShowDto tvShowDto){
+    public ResponseEntity<Void> deleteFavorite(@RequestBody @Valid FavoriteTvShowDto tvShowDto){
         favoriteTvShowService.deleteFavorite(tvShowDto);
         return ResponseEntity.noContent().build();
     }

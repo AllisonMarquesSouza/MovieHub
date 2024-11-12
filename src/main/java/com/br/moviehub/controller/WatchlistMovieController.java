@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,7 +74,7 @@ public class WatchlistMovieController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = WatchlistMovie.class)
                     ))})
     @PostMapping("/add")
-    public ResponseEntity<WatchlistMovie> addInWatchlist(@RequestBody WatchlistMovieDto watchlistMovieDto) {
+    public ResponseEntity<WatchlistMovie> addInWatchlist(@RequestBody @Valid WatchlistMovieDto watchlistMovieDto) {
         return new ResponseEntity<>(watchlistMovieService.addInWatchlist(watchlistMovieDto), HttpStatus.CREATED);
     }
 
@@ -96,7 +97,7 @@ public class WatchlistMovieController {
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/deleteByStatus")
-    public ResponseEntity<Void> deleteByStatus(@RequestBody DeleteWatchlistByStatusDto statusDto){
+    public ResponseEntity<Void> deleteByStatus(@RequestBody @Valid DeleteWatchlistByStatusDto statusDto){
         watchlistMovieService.deleteByUserIdAndStatus(statusDto);
         return ResponseEntity.noContent().build();
     }
@@ -108,7 +109,7 @@ public class WatchlistMovieController {
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteByUserAndMovie(@RequestBody WatchlistMovieDto watchlistMovieDto){
+    public ResponseEntity<Void> deleteByUserAndMovie(@RequestBody @Valid WatchlistMovieDto watchlistMovieDto){
         watchlistMovieService.deleteByUserIdAndMovieId(watchlistMovieDto);
         return ResponseEntity.noContent().build();
     }

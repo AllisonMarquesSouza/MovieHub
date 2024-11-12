@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,7 @@ public class FavoriteMovieController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Boolean.class)
                     ))})
     @GetMapping("/isFavorited")
-    public ResponseEntity<Boolean> isMovieFavorited(@RequestBody FavoriteMovieDto favoriteMovieDto) {
+    public ResponseEntity<Boolean> isMovieFavorited(@RequestBody @Valid FavoriteMovieDto favoriteMovieDto) {
         return ResponseEntity.ok(favoriteMovieService.isMovieFavorited(favoriteMovieDto));
     }
 
@@ -59,7 +60,7 @@ public class FavoriteMovieController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = FavoriteMovie.class)
                     ))})
     @PostMapping("/add")
-    public ResponseEntity<FavoriteMovie> addFavorite(@RequestBody FavoriteMovieDto favoriteMovieDto) {
+    public ResponseEntity<FavoriteMovie> addFavorite(@RequestBody @Valid FavoriteMovieDto favoriteMovieDto) {
         return new ResponseEntity<>(favoriteMovieService.addFavorite(favoriteMovieDto),
                 HttpStatus.CREATED);
     }
@@ -71,7 +72,7 @@ public class FavoriteMovieController {
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteFavorite(@RequestBody FavoriteMovieDto favoriteMovieDto) {
+    public ResponseEntity<Void> deleteFavorite(@RequestBody @Valid FavoriteMovieDto favoriteMovieDto) {
         favoriteMovieService.deleteFavorite(favoriteMovieDto);
         return ResponseEntity.noContent().build();
     }
