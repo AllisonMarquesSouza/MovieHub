@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,7 +74,7 @@ public class WatchlistTvShowController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = WatchlistTvShow.class)
                     ))})
     @PostMapping("/add")
-    public ResponseEntity<WatchlistTvShow> add(@RequestBody WatchlistTvShowDto watchlistDto){
+    public ResponseEntity<WatchlistTvShow> add(@RequestBody @Valid WatchlistTvShowDto watchlistDto){
         return new ResponseEntity<>(watchlistTvShowService.addInWatchlist(watchlistDto), HttpStatus.CREATED);
     }
 
@@ -84,7 +85,7 @@ public class WatchlistTvShowController {
                     content = @Content(mediaType = "application/json"
                     ))})
     @PatchMapping("/updateStatus")
-    public ResponseEntity<Void> updateStatus(@RequestBody WatchlistTvShowUpdateDto watchlistDto){
+    public ResponseEntity<Void> updateStatus(@RequestBody @Valid WatchlistTvShowUpdateDto watchlistDto){
         watchlistTvShowService.updateStatus(watchlistDto);
         return ResponseEntity.noContent().build();
     }
@@ -96,7 +97,7 @@ public class WatchlistTvShowController {
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> delete(@RequestBody WatchlistTvShowDto watchlistDto){
+    public ResponseEntity<Void> delete(@RequestBody @Valid WatchlistTvShowDto watchlistDto){
         watchlistTvShowService.deleteByUserIdAndTvShowId(watchlistDto);
         return ResponseEntity.noContent().build();
     }
@@ -108,7 +109,7 @@ public class WatchlistTvShowController {
                     content = @Content(mediaType = "application/json"
                     ))})
     @DeleteMapping("/deleteByStatus")
-    public ResponseEntity<Void> deleteByStatus(@RequestBody DeleteWatchlistByStatusDto watchlistDto){
+    public ResponseEntity<Void> deleteByStatus(@RequestBody @Valid DeleteWatchlistByStatusDto watchlistDto){
         watchlistTvShowService.deleteByUserIdAndStatus(watchlistDto);
         return ResponseEntity.noContent().build();
     }
